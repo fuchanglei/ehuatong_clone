@@ -802,7 +802,7 @@ namespace WpfApplication1
 
                         if (invoker.WaitWebPageLoad() == true)
                         {
-                            invoker.InvokeScript("setContent", dd.getcontext());
+                            invoker.InvokeScript("setContent", dd.getcontext().Replace("&amp;","&"));
                         }
                     }
                     else
@@ -811,7 +811,7 @@ namespace WpfApplication1
 
                         if (invoker.WaitWebPageLoad() == true)
                         {
-                            invoker.InvokeScript("setContent", dd.getcontext_comm());
+                            invoker.InvokeScript("setContent", dd.getcontext_comm().Replace("&amp;","&"));
                         }
                     }
                 }

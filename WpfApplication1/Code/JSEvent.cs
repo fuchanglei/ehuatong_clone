@@ -26,9 +26,6 @@ namespace WpfApplication1
         public string MN_OpenPic(string filter)
         {
             string filePath = "";
-            string src="";
-            string w = "";
-            string h = "";
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
             openFileDialog1.Multiselect = false;
             openFileDialog1.Filter = filter;//Õº∆¨∏Ò Ω
@@ -37,13 +34,12 @@ namespace WpfApplication1
             {
                 filePath = MainWindow.tree5_sel.href + "\\picture\\" + openFileDialog1.SafeFileName;
                 File.Copy(openFileDialog1.FileName, filePath, true);
+                
                 System.Drawing.Bitmap pic = new System.Drawing.Bitmap(filePath);
-                src = " src:'file:///'"+filePath+"'";
-                w = "width:'" + pic.Width + "',";
-                h = "height:'"+pic.Height+"'";
-
+                filePath = filePath.Replace("\\","/");
             }
-            return "{"+src+w+h+"}";
+            //string result="{"+src+w+h+"}";
+            return filePath;
         }
     }
 }
