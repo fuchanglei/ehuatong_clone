@@ -562,6 +562,13 @@ namespace WpfApplication1
             w1.getdata += new Window1.myevent(m_window1_idd_NameChanged);
             w1.Show();
         }
+        private void saveashtml(object sender, RoutedEventArgs e)  //导出为html包
+        {
+           
+            
+            
+
+        }
         private void m_window1_idd_NameChanged(object sender, Window1.textEventArgs e)
         {
             //获取事件传递过来的数据
@@ -839,9 +846,7 @@ namespace WpfApplication1
         {
             //MessageBox.Show(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
             outline sel = tree6.SelectedItem as outline;
-            if (sel.nodename == "Cover" || sel.nodename == "Statement")
-                ;
-            else
+            if (sel.nodename != "Cover" || sel.nodename != "Statement")
             {
                 string html = invoker.InvokeScript("getContent").ToString();
                 if (sel.type == outlinetype.common)

@@ -14,10 +14,11 @@ namespace WpfApplication1
 {
     public enum outlinetype
     {   
-         common=0,
+        common=0,
         Chapter = 1,
         Section1=2,
-        Section2=3
+        Section2=3,
+        empty=4,
     }
 
  public class outline : INotifyPropertyChanged  //目录数据类型
@@ -196,7 +197,7 @@ namespace WpfApplication1
                        Name1 = xm.InnerText,
                        nodename=xm.Name,
                        toollip = xm.InnerText,
-                       type=outlinetype.common,
+                       type =outlinetype.common,
                        href= ((XmlElement)xm).GetAttribute("href"),
                        parent=null
 
