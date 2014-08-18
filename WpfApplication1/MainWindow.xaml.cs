@@ -446,7 +446,7 @@ namespace WpfApplication1
             //MessageBox.Show(c.title_name);
             if (web_show)
            {
-                this.webBrowser1.Navigate("file:///F:/ueditor1_3_6-src_tofuchangli/ueditor1_3_6-src/dist/utf8-net/index.html");
+               this.webBrowser1.Navigate("file:///F:/ueditor1_3_6-src_tofuchangli/ueditor1_3_6-src/index.html");
                 web_show = false;
             }
             cc = (title)listView1.SelectedItem;
@@ -839,9 +839,22 @@ namespace WpfApplication1
         {
             //MessageBox.Show(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
             outline sel = tree6.SelectedItem as outline;
-            string html = invoker.InvokeScript("getContent").ToString();
-            Savexml sxml = new Savexml("Papersection/"+sel.nodename, html,sel.secid); 
-            sxml.savexml();
+            if (sel.nodename == "Cover" || sel.nodename == "Statement")
+                ;
+            else
+            {
+                string html = invoker.InvokeScript("getContent").ToString();
+                if (sel.type == outlinetype.common)
+                {
+                    Savexml cxml = new Savexml(sel.nodename, html, sel.secid);
+                    cxml.savexml();
+                }
+                else
+                {
+                    Savexml sxml = new Savexml("Papersection/" + sel.nodename, html, sel.secid);
+                    sxml.savexml();
+                }
+            }
         }
 
         private void tree5_SelectedItemChanged_1(object sender, RoutedPropertyChangedEventArgs<object> e)

@@ -14,7 +14,7 @@ namespace WpfApplication1
         private  string xml_style;
         private static XmlNode root_context;
         private static XmlNode root_style;
-        private string  type;
+        private string  type; //节点类型，路劲
         private string _id;
         private string context_html;
         public  XmlDocument doc_style; 
@@ -43,7 +43,7 @@ namespace WpfApplication1
             doc_context.Load(xml_context);
             root_context = doc_context.DocumentElement;
         }
-        public void savexml()
+        public void savexml()  //保存更改后的信息
         {
             XmlNodeList ccwww = root_context.SelectNodes(type);
             foreach (XmlNode ccd in ccwww)

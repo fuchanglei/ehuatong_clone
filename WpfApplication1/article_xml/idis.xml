@@ -30,7 +30,7 @@
     <TeacherS>郑建程</TeacherS>
     <TimeS>2010.1</TimeS>
   </Statement>
-  <Abstract>
+  <Abstract id="1">
     <abstracttitle>
       <p style="margin: 5pt 0cm; text-align: center; line-height: 20pt; font-weight: bold;">
         <span style="font-family: 黑体; font-size: 14pt; font-weight: bold;">摘 要</span>
@@ -50,7 +50,7 @@
       </p>
     </keywordc>
   </Abstract>
-  <AbstractE>
+  <AbstractE id="2">
   </AbstractE>
   <PaperSection>
     <Chapter>
