@@ -111,7 +111,6 @@
                             <MenuItem Header="自科申请" Name="m5" Click="MenuItem_Click_3"></MenuItem>
                             <MenuItem Header="研究报告" Name="m7" Click="MenuItem_Click_3"></MenuItem>
                         </MenuItem>
-                       
                     </MenuItem>
                     
                 </Menu>
@@ -155,7 +154,7 @@
                                     </MenuItem>
                                     <MenuItem Header="修改" Click="modify_idd_title">
                                     </MenuItem>
-                                    <MenuItem Header="导出">
+                                    <MenuItem Header="导出" Click="saveashtml">
                                     </MenuItem>
                                 </ContextMenu>
                             </TreeView.ContextMenu>

@@ -121,7 +121,7 @@ namespace WpfApplication1
        {
            Directory.CreateDirectory(newtitle.href);
            Directory.CreateDirectory(newtitle.href+"\\music");
-           Directory.CreateDirectory(newtitle.href + "\\vedio");
+           Directory.CreateDirectory(newtitle.href + "\\video");
            Directory.CreateDirectory(newtitle.href + "\\picture");
            Directory.CreateDirectory(newtitle.href + "\\music");
            idisser_data.idisser.TreeViewItems4.Add(newtitle);
@@ -132,8 +132,8 @@ namespace WpfApplication1
            xe1.SetAttribute("href",newtitle.href);//设置节点的href
            root.AppendChild(xe1);
            doc.Save("iDissertation.xml");
-           cf = new copy_files(System.Environment.CurrentDirectory.ToString()+"\\"+((int)newtitle.nodetype).ToString(), newtitle.href);
-           cf.copyfile();
+          // cf = new copy_files(System.Environment.CurrentDirectory.ToString()+"\\"+((int)newtitle.nodetype).ToString(), newtitle.href);
+           copy_files.copyfile(System.Environment.CurrentDirectory.ToString() + "\\" + ((int)newtitle.nodetype).ToString(), newtitle.href);
            Savexml sa = new Savexml(newtitle.href);
            sa.init_idis();
            //Directory.CreateDirectory(newtitle.href);

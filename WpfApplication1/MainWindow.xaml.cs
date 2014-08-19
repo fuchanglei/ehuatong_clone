@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -17,6 +18,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using WebBrowserEXT;
+using System.Threading;
 using Code.WebbrowserInteropr;
 
 
@@ -31,7 +33,6 @@ namespace WpfApplication1
        // public List<PropertyNodeItem> itemlist3 = new List<PropertyNodeItem>();
         //title listdata=new title();
         ObservableCollection<title> itemlist = new ObservableCollection<title>();
-       // private int init_count = 0;
         private outline_Data select_tree5;
         public static string idd_href;
         public Data gettreeview = new Data();
@@ -247,7 +248,6 @@ namespace WpfApplication1
             ObservableCollection<outline> cc = tree6.ItemsSource as ObservableCollection<outline>;
             cc.Insert(c, aa);
             
-            // sel.Name1 = newname;
         }
         private void m_window5_outline_add(object sender, Window5.textEventArgs e)
         {
@@ -564,8 +564,13 @@ namespace WpfApplication1
         }
         private void saveashtml(object sender, RoutedEventArgs e)  //导出为html包
         {
-           
-            
+            System.Windows.Forms.FolderBrowserDialog folder1 = new System.Windows.Forms.FolderBrowserDialog();
+            folder1.Description = "选择保存路径";
+            folder1.ShowNewFolderButton = true;
+            if (folder1.ShowDialog()==System.Windows.Forms.DialogResult.OK)
+            {
+                ThreadPool.QueueUserWorkItem(status => exporttohtml.export(tree5_sel,folder1.SelectedPath));
+            }
             
 
         }

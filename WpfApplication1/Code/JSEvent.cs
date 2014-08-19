@@ -18,10 +18,10 @@ namespace WpfApplication1
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                filePath = MainWindow.tree5_sel.href + "\\vedio\\" + openFileDialog1.SafeFileName;
+                filePath = MainWindow.tree5_sel.href + "\\dialogs\\video\\" + openFileDialog1.SafeFileName;
                 File.Copy(openFileDialog1.FileName, filePath, true);
             }
-            return "file:///"+filePath;
+            return filePath;
         }
         public string MN_OpenPic(string filter)
         {
@@ -32,11 +32,11 @@ namespace WpfApplication1
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                filePath = MainWindow.tree5_sel.href + "\\picture\\" + openFileDialog1.SafeFileName;
+                filePath = MainWindow.tree5_sel.href + "\\picture/" + openFileDialog1.SafeFileName;
                 File.Copy(openFileDialog1.FileName, filePath, true);
                 
                 System.Drawing.Bitmap pic = new System.Drawing.Bitmap(filePath);
-                filePath = filePath.Replace("\\","/");
+                //filePath = filePath.Replace("\\","/");
             }
             //string result="{"+src+w+h+"}";
             return filePath;
