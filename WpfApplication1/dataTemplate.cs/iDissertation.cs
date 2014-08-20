@@ -121,7 +121,7 @@ namespace WpfApplication1
        {
            Directory.CreateDirectory(newtitle.href);
            Directory.CreateDirectory(newtitle.href+"\\music");
-           Directory.CreateDirectory(newtitle.href + "\\video");
+          // Directory.CreateDirectory(newtitle.href + "\\video");
            Directory.CreateDirectory(newtitle.href + "\\picture");
            Directory.CreateDirectory(newtitle.href + "\\music");
            idisser_data.idisser.TreeViewItems4.Add(newtitle);
