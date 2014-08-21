@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Xml;
 
 namespace WpfApplication1
 {
@@ -11,9 +12,9 @@ namespace WpfApplication1
        private static string xml_style;
        static exporttohtml()
        {
-           xml_style = MainWindow.idd_href + "/idis.xml";
+           xml_style = MainWindow.idd_href + "\\idis.xml";
        }
-       public static void export(iDissertation tree5_sel)
+       public static void export(iDissertation tree5_sel,string todire)
        {
            FileStream fi = new FileStream(MainWindow.idd_href + "\\" + tree5_sel.Name + ".html", FileMode.Create);
            StreamWriter sw = new StreamWriter(fi, Encoding.Default);
@@ -24,8 +25,23 @@ namespace WpfApplication1
            sw.WriteLine("<title>" + tree5_sel.Name + "</title>");
            sw.WriteLine("</head>");
            sw.WriteLine("<body>");
-
-
+           XmlDocument ep = new XmlDocument();
+           ep.Load(xml_style);
+           XmlNodeList context = ep.DocumentElement.ChildNodes;
+           foreach (XmlNode xm in context)
+           {
+               
+               string html = ((XmlElement)xm).InnerXml.ToString().Replace(tree5_sel.href+"\\", "");
+               html = html.Replace("dialogs\\video\\","");
+               sw.WriteLine(html);
+           }
+           sw.WriteLine("</body>");
+           sw.WriteLine("</html>");
+           sw.Flush();
+           sw.Close();
+           fi.Close();
+           copy_files.copyfile(tree5_sel.href,todire);
+           
        }
     }
     

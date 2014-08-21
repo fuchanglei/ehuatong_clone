@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using WebBrowserEXT;
+using System.Threading;
 using Code.WebbrowserInteropr;
 
 
@@ -31,7 +32,6 @@ namespace WpfApplication1
        // public List<PropertyNodeItem> itemlist3 = new List<PropertyNodeItem>();
         //title listdata=new title();
         ObservableCollection<title> itemlist = new ObservableCollection<title>();
-       // private int init_count = 0;
         private outline_Data select_tree5;
         public static string idd_href;
         public Data gettreeview = new Data();
@@ -44,7 +44,9 @@ namespace WpfApplication1
         private string newname=string.Empty;
         private int count;   //当前目录组下笔记的数目
         public title cc = new title();
-        public outline tree6_sel;
+        public outline tree6_sel =new outline();
+        public string savecontext;
+        //public bool issave;
         private int last;
         private bool isselect = true;
         private string filename;
@@ -56,7 +58,6 @@ namespace WpfApplication1
         ContextMenu c4;
         ContextMenu c5;
         WebbrowserScriptInvoker invoker;
-        
         public MainWindow()
         {
             InitializeComponent();
@@ -247,7 +248,6 @@ namespace WpfApplication1
             ObservableCollection<outline> cc = tree6.ItemsSource as ObservableCollection<outline>;
             cc.Insert(c, aa);
             
-            // sel.Name1 = newname;
         }
         private void m_window5_outline_add(object sender, Window5.textEventArgs e)
         {
@@ -320,6 +320,26 @@ namespace WpfApplication1
         private void OnQueryContinueDrag(object sender, QueryContinueDragEventArgs e)
         {
             mAdornerLayer.Update();
+        }
+        private void savexml(outline sel, string html)
+        {
+            //outline sel = tree6.SelectedItem as outline;
+            if (sel.nodename != "Cover" || sel.nodename != "Statement")
+            {
+                //string html = invoker.InvokeScript("getContent").ToString();
+                if (sel.type == outlinetype.common)
+                {
+                    Savexml cxml = new Savexml(sel.nodename, html, sel.secid);
+                    cxml.savexml();
+                    ThreadPool.QueueUserWorkItem(status => cxml.savetem());
+                }
+                else
+                {
+                    Savexml sxml = new Savexml("Papersection/" + sel.nodename, html, sel.secid);
+                    sxml.savexml();
+                   ThreadPool.QueueUserWorkItem(status => sxml.savetem());
+                }
+            }
         }
         private void label2_MouseMove(object sender, MouseEventArgs e)
         {
@@ -564,8 +584,13 @@ namespace WpfApplication1
         }
         private void saveashtml(object sender, RoutedEventArgs e)  //导出为html包
         {
-           
-            
+            System.Windows.Forms.FolderBrowserDialog folder1 = new System.Windows.Forms.FolderBrowserDialog();
+            folder1.Description = "选择保存路径";
+            folder1.ShowNewFolderButton = true;
+            if (folder1.ShowDialog()==System.Windows.Forms.DialogResult.OK)
+            {
+                ThreadPool.QueueUserWorkItem(status => exporttohtml.export(tree5_sel,folder1.SelectedPath));
+            }
             
 
         }
@@ -740,12 +765,6 @@ namespace WpfApplication1
             
             
         }
-
-        private void Image_ImageFailed(object sender, ExceptionRoutedEventArgs e)
-        {
-
-        }
-
         private void MenuItem_Click_3(object sender, RoutedEventArgs e)
         {
             //MenuItem cc = this.menu2.Items[0] as MenuItem;
@@ -770,9 +789,15 @@ namespace WpfApplication1
 
         private void tree6_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
+
+            //ThreadPool.QueueUserWorkItem(status=>savexml(tree6_sel));
+            if (tree6_sel.type != outlinetype.empty && tree6_sel.Name1 != null)
+            {
+
+               savexml(tree6_sel, savecontext);
+            }
             try
             {
-               
                 tree6_sel = this.tree6.SelectedItem as outline;
                 textBox2.Text = tree6_sel.Name1;
                 //tree6_sel.Name1 = "1111";
@@ -810,6 +835,7 @@ namespace WpfApplication1
                         if (invoker.WaitWebPageLoad() == true)
                         {
                             invoker.InvokeScript("setContent", dd.getcontext().Replace("&amp;","&"));
+
                         }
                     }
                     else
@@ -873,7 +899,7 @@ namespace WpfApplication1
                 tree5_sel = (iDissertation)tree5.SelectedItem;
                 idd_href = tree5_sel.href;
                 newname = tree5_sel.Name;
-                select_tree5 = new outline_Data();
+                select_tree5 = new outline_Data(true);
                 // MessageBox.Show(idd_href);
                 this.tree6.ItemsSource = select_tree5.TreeViewItems1;
 
@@ -888,11 +914,13 @@ namespace WpfApplication1
             
         }
 
-        private void tree6_Loaded(object sender, RoutedEventArgs e)
+
+        private void tree6_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            //init_count++;
-           // MessageBox.Show(init_count.ToString());
-            //tree6.TargetUpdated
+            if (tree6_sel.type != outlinetype.empty && tree6_sel.Name1 != null)
+            {
+                savecontext = invoker.InvokeScript("getContent").ToString();
+            }
         }
 
               

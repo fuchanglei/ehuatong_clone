@@ -66,6 +66,7 @@
     <Compile Include="dataTemplate.cs\Data.cs" />
     <Compile Include="iDissertation\copy_files.cs" />
     <Compile Include="iDissertation\exporttohtml.cs" />
+    <Compile Include="iDissertation\Savecontext.cs" />
     <Compile Include="iDissertation\Savexml.cs" />
     <Compile Include="Code\JSEvent.cs" />
     <Compile Include="WebbrowserScriptInvoker.cs" />
@@ -76,7 +77,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="dataTemplate.cs\iDissertation.cs" />
+    <Compile Include="iDissertation\iDissertation.cs" />
     <Compile Include="dataTemplate.cs\Lvdata.cs" />
     <Compile Include="dataTemplate.cs\outline.cs" />
     <Compile Include="dataTemplate.cs\sidefile.cs" />

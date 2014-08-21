@@ -111,7 +111,6 @@
                             <MenuItem Header="自科申请" Name="m5" Click="MenuItem_Click_3"></MenuItem>
                             <MenuItem Header="研究报告" Name="m7" Click="MenuItem_Click_3"></MenuItem>
                         </MenuItem>
-                       
                     </MenuItem>
                     
                 </Menu>
@@ -155,7 +154,7 @@
                                     </MenuItem>
                                     <MenuItem Header="修改" Click="modify_idd_title">
                                     </MenuItem>
-                                    <MenuItem Header="导出">
+                                    <MenuItem Header="导出" Click="saveashtml">
                                     </MenuItem>
                                 </ContextMenu>
                             </TreeView.ContextMenu>
@@ -190,7 +189,6 @@
                         </HierarchicalDataTemplate>
                     </ListView.ItemTemplate>
                     <ListView.ContextMenu>
-                        
                         <ContextMenu>
                             <MenuItem Header="重命名" Click="MenuItem_modify">
                             </MenuItem>
@@ -200,9 +198,8 @@
                             </MenuItem>
                         </ContextMenu>
                     </ListView.ContextMenu>
-
                 </ListView>
-                <TreeView Name="tree6" Visibility="Hidden" BorderThickness="0" Background="#FFB1BED5" ItemTemplate="{StaticResource treeViewTemplate5}"  Height="auto" SelectedItemChanged="tree6_SelectedItemChanged" Loaded="tree6_Loaded">
+                <TreeView Name="tree6" Visibility="Hidden" BorderThickness="0" Background="#FFB1BED5" ItemTemplate="{StaticResource treeViewTemplate5}"  Height="auto" SelectedItemChanged="tree6_SelectedItemChanged"  PreviewMouseLeftButtonDown="tree6_PreviewMouseLeftButtonDown">
                     <TreeView.ItemContainerStyle>
                         <Style TargetType="{x:Type TreeViewItem}">
                             <Setter Property="IsExpanded" Value="True"></Setter>
@@ -228,14 +225,14 @@
                 <Menu Height="28" Name="menu4" Width="28">
                     <MenuItem Height="28" Width="28" BorderThickness="0.5" Background="#FFFCFCFC" ToolTip="添加附件" Click="MenuItem_Click_2">
                         <MenuItem.Icon>
-                            <Image Width="28" Height="28" Source="/WpfApplication1;component/Images/attachment_s.ico" ImageFailed="Image_ImageFailed" Margin="-5,-5,0,0" />
+                            <Image Width="28" Height="28" Source="/WpfApplication1;component/Images/attachment_s.ico" Margin="-5,-5,0,0" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </Menu>
                 <ListView Height="28"  Name="listView2" Width="auto" Background="#FFE5E5E5" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <WrapPanel >
+                            <WrapPanel>
                             </WrapPanel>
                         </ItemsPanelTemplate>
                     </ListView.ItemsPanel>
@@ -298,7 +295,7 @@
                 <Menu Height="28" Name="menu10" Width="28">
                     <MenuItem Height="28" Width="28" BorderThickness="0.5" Background="#FFFCFCFC" ToolTip="添加附件" Click="MenuItem_Click_2">
                         <MenuItem.Icon>
-                            <Image Width="22" Height="22" Source="/WpfApplication1;component/Images/attachment_s.ico" ImageFailed="Image_ImageFailed" Margin="0,-5,0,0" />
+                            <Image Width="22" Height="22" Source="/WpfApplication1;component/Images/attachment_s.ico"  Margin="0,-5,0,0" />
                         </MenuItem.Icon>
                         
                     </MenuItem>
