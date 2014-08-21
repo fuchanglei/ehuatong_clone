@@ -17,8 +17,11 @@ namespace WpfApplication1
         private string  type; //节点类型，路劲
         private string _id;
         private string context_html;
-        public  XmlDocument doc_style; 
+        public  XmlDocument doc_style;
+        private string xml_tem;
         public  XmlDocument doc_context;
+        private XmlDocument doc_tem;
+        private XmlNode root_tem;
        // private  XmlNodeList chilnodes;
         public Savexml(string _type,string _html,string id)
         {
@@ -29,6 +32,11 @@ namespace WpfApplication1
             doc_context = new XmlDocument();
             doc_context.Load(xml_context);
             root_context = doc_context.DocumentElement;
+            xml_tem = MainWindow.idd_href + "\\webTemplate.xml";
+            doc_tem = new XmlDocument();
+            doc_tem.Load(xml_tem);
+            root_tem = doc_tem.DocumentElement;
+           
             //chilnodes = root_context.ChildNodes;
 
         }
@@ -53,11 +61,25 @@ namespace WpfApplication1
                     ccd.InnerXml = context_html.Replace("&", "&amp;");
                     doc_context.Save(@xml_context);
                     break;
+                }     
+            }   
+        }
+        public void savetem()
+        {
+            XmlNodeList ccwww = root_tem.SelectNodes(type);
+            foreach (XmlNode ccd in ccwww)
+            {
+                if (((XmlElement)ccd).GetAttribute("id") == _id)
+                {
+                    foreach (XmlNode xm in ccd.ChildNodes)
+                    {
+                        xm.InnerText = ccd.SelectSingleNode(xm.Name).InnerText;
+                    }
+                    break;
                 }
-                   
             }
-            
-        } 
+            doc_tem.Save(xml_tem);
+        }
         public void init_idis()  //创建的时候初始化idis
         {
             XmlNodeList styles = root_style.ChildNodes;

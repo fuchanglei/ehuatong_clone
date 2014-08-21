@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <IDisseration> 
-<Cover id="1" href="coverC.htm" nodetype="onmmon">封面</Cover>
-<Cover id="2" href="cover.htm" nodetype="onmmon">封面（英文）</Cover>
-<Statement href="statement.htm" nodetype="onmmon">原创声明及授权</Statement>
+<Cover id="1" href="coverC.htm" nodetype="empty">封面</Cover>
+<Cover id="2" href="cover.htm" nodetype="empty">封面（英文）</Cover>
+<Statement href="statement.htm" nodetype="empty">原创声明及授权</Statement>
 <Abstract id="1" href="../center/abstractC.htm" nodetype="common">摘要</Abstract>
 <AbstractE id="2" href="../center/abstract.htm" nodetype="common">Abstract</AbstractE>
 <Catalog id="1" href="../center/catalog.htm" nodetype="common">目录</Catalog>

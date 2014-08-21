@@ -77,7 +77,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="dataTemplate.cs\iDissertation.cs" />
+    <Compile Include="iDissertation\iDissertation.cs" />
     <Compile Include="dataTemplate.cs\Lvdata.cs" />
     <Compile Include="dataTemplate.cs\outline.cs" />
     <Compile Include="dataTemplate.cs\sidefile.cs" />
