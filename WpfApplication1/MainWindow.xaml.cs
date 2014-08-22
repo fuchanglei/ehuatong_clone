@@ -169,7 +169,7 @@ namespace WpfApplication1
         {
             // cc = treeView1.SelectedItem as outline;
             Window5 w5 = new Window5();
-            w5.getname(newname, 0);
+            w5.getname(newname, 5);
             w5.getdata += new Window5.myevent(m_window5_outline_add);
             w5.Show();
           // tree6_sel.children.Add(newone);
@@ -193,7 +193,7 @@ namespace WpfApplication1
             // label2.Content = cd.TreeViewItems1[0].children.Count.ToString();
              * */
             Window5 w5 = new Window5();
-            w5.getname(newname, 1);
+            w5.getname(newname, 4);
             w5.getdata += new Window5.myevent(m_window5_outline_addchapter);
             w5.Show();
 
@@ -256,7 +256,7 @@ namespace WpfApplication1
             outline_Data add_section = new outline_Data();
             outline sel = (outline)tree6.SelectedItem;
             add_section.outline_node_add(sel, newname);
-           // sel.Name1 = newname;
+           
         }
        
         //public 
@@ -373,9 +373,6 @@ namespace WpfApplication1
                 parent = item,
                 node_lev=nodelve
             };
-            //itemlist3[1].Children.Add(node_item);
-            //this.tree3.ItemsSource = itemlist3;
-            // MessageBox.Show(item.DisplayName);
             item.Children.Insert(0, node_item);
         
         }
@@ -455,8 +452,6 @@ namespace WpfApplication1
         private void tvProperties_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             PropertyNodeItem cc = (PropertyNodeItem)tvProperties.SelectedItem;
-            
-            //  MessageBox.Show(tree2.SelectedItem.ToString());
             MessageBox.Show(cc.DisplayName);
         }
 
@@ -477,9 +472,7 @@ namespace WpfApplication1
             if (invoker.WaitWebPageLoad() == true)
             {
                 invoker.InvokeScript("setContent", "sadfasdfasfaf1111111fu"); 
-            }
-            
-           
+            } 
 
         }
         internal static class Utils
