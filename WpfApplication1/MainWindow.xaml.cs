@@ -202,7 +202,7 @@ namespace WpfApplication1
         {
             string[] ss = tree6_sel.Name1.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             Window5 w5 = new Window5();
-            w5.getname(ss[1],3);
+            w5.getname(ss[1],(int)tree6_sel.type);
             w5.getdata += new Window5.myevent(m_window5_outline_modify);
             w5.Show();
         }
@@ -331,13 +331,13 @@ namespace WpfApplication1
                 {
                     Savexml cxml = new Savexml(sel.nodename, html, sel.secid);
                     cxml.savexml();
-                    ThreadPool.QueueUserWorkItem(status => cxml.savetem());
+                    //ThreadPool.QueueUserWorkItem(status => cxml.savetem());
                 }
                 else
                 {
                     Savexml sxml = new Savexml("Papersection/" + sel.nodename, html, sel.secid);
                     sxml.savexml();
-                   ThreadPool.QueueUserWorkItem(status => sxml.savetem());
+                  // ThreadPool.QueueUserWorkItem(status => sxml.savetem());
                 }
             }
         }
@@ -578,7 +578,7 @@ namespace WpfApplication1
         private void modify_idd_title(object sender, RoutedEventArgs e)  //修改idd名称
         {
             Window1 w1 = new Window1();
-            w1.getname(newname, 0);
+            w1.getname(tree5_sel.Name, 0);
             w1.getdata += new Window1.myevent(m_window1_idd_NameChanged);
             w1.Show();
         }
@@ -793,7 +793,6 @@ namespace WpfApplication1
             //ThreadPool.QueueUserWorkItem(status=>savexml(tree6_sel));
             if (tree6_sel.type != outlinetype.empty && tree6_sel.Name1 != null)
             {
-
                savexml(tree6_sel, savecontext);
             }
             try
@@ -898,7 +897,7 @@ namespace WpfApplication1
                 this.tree6.Visibility = Visibility.Visible;
                 tree5_sel = (iDissertation)tree5.SelectedItem;
                 idd_href = tree5_sel.href;
-                newname = tree5_sel.Name;
+               // newname = tree5_sel.Name;
                 select_tree5 = new outline_Data(true);
                 // MessageBox.Show(idd_href);
                 this.tree6.ItemsSource = select_tree5.TreeViewItems1;

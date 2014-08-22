@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using System.Threading;
 
 
 namespace WpfApplication1
@@ -60,11 +61,12 @@ namespace WpfApplication1
                 {
                     ccd.InnerXml = context_html.Replace("&", "&amp;");
                     doc_context.Save(@xml_context);
+                    ThreadPool.QueueUserWorkItem(status=>savetem(ccd));
                     break;
                 }     
             }   
         }
-        public void savetem()
+        public void savetem(XmlNode cc)
         {
             XmlNodeList ccwww = root_tem.SelectNodes(type);
             foreach (XmlNode ccd in ccwww)
@@ -73,7 +75,7 @@ namespace WpfApplication1
                 {
                     foreach (XmlNode xm in ccd.ChildNodes)
                     {
-                        xm.InnerText = ccd.SelectSingleNode(xm.Name).InnerText;
+                        xm.InnerText = cc.SelectSingleNode(xm.Name).InnerText;
                     }
                     break;
                 }
