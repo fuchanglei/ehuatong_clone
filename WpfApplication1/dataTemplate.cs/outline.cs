@@ -247,14 +247,10 @@ namespace WpfApplication1
                            toollip=title,
                            type=outlinetype.Section1,
                            parent=chapter
-
                        };
-                       
                        chapter.children.Add(getnodes(xms,chapter));
-                   }
-
+                  }
                }
-
            }
            return cc;
        }
@@ -297,7 +293,7 @@ namespace WpfApplication1
            }
            return node;
        }
-       private XmlNode get_temnode(string name, string id)  //获取Tem容节点
+       private XmlNode get_temnode(string name, string id)  //获取Tem节点
        {
            XmlNode node = null;
            XmlNodeList context = root_tem.SelectNodes(name);
@@ -337,8 +333,7 @@ namespace WpfApplication1
                return getlasnode_tem(select.children[select.children.Count - 1]);
                //return get_contexnode(select.children[select.children.Count - 1].nodename, select.children[select.children.Count - 1].secid);
            }
-       }
-       
+       }     
        public void outline_node_add(outline select,string newname)  //增加小节
        {
            
@@ -380,7 +375,11 @@ namespace WpfApplication1
            root_contex.InsertAfter(xe2,b);
            doc_contex.Save(idis_xml);
            XmlElement xe3 = doc_tem.CreateElement(nodename);
+           XmlElement xe3_title = doc_tem.CreateElement("papersectiontitle");
+           XmlElement xe3_text = doc_tem.CreateElement("papersectiontext");
            xe3.SetAttribute("id", id);
+           xe3.AppendChild(xe3_title);
+           xe3.AppendChild(xe3_text);
            root_tem.InsertAfter(xe3,c);
            doc_tem.Save(tem_xml);
        }
@@ -401,7 +400,7 @@ namespace WpfApplication1
            {
                if (((XmlElement)xm).GetAttribute("id") == id)
                {
-                   xm.RemoveAll();
+                   //xm.RemoveAll();
                    root_tem.RemoveChild(xm);
                    doc_tem.Save(tem_xml);
                    break;
@@ -488,7 +487,6 @@ namespace WpfApplication1
                {
                    //deletenode.RemoveChild(xm);
                    delet_outline(xm);
-
                }
                deletenode.ParentNode.RemoveChild(deletenode);
                delete_contex(deletenode.Name, ((XmlElement)deletenode).GetAttribute("id"));
@@ -553,7 +551,6 @@ namespace WpfApplication1
                href = href,
                type = outlinetype.Chapter
            };
-           
            XmlElement xe1 = doc_outline.CreateElement(nodename);//创建一个节点
            xe1.SetAttribute("id", id);//设置该节点id属性
            xe1.SetAttribute("sec-title", newname);//设置该节点name属性

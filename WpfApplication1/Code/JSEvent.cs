@@ -34,11 +34,9 @@ namespace WpfApplication1
             {
                 filePath = MainWindow.tree5_sel.href + "\\picture/" + openFileDialog1.SafeFileName;
                 File.Copy(openFileDialog1.FileName, filePath, true);
+                //System.Drawing.Bitmap pic = new System.Drawing.Bitmap(filePath);
                 
-                System.Drawing.Bitmap pic = new System.Drawing.Bitmap(filePath);
-                //filePath = filePath.Replace("\\","/");
             }
-            //string result="{"+src+w+h+"}";
             return filePath;
         }
     }

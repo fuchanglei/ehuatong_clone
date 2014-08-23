@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using System.Threading;
+using System.Text.RegularExpressions;
 
 
 namespace WpfApplication1
@@ -60,11 +62,71 @@ namespace WpfApplication1
                 {
                     ccd.InnerXml = context_html.Replace("&", "&amp;");
                     doc_context.Save(@xml_context);
+                    ThreadPool.QueueUserWorkItem(status=>savetem(ccd));
                     break;
                 }     
             }   
         }
-        public void savetem()
+        private bool ishasRichmedie(XmlNode paragraph)
+        {
+            if (paragraph.InnerXml.Contains("<img") == true || paragraph.InnerXml.Contains("<iframe") == true)
+                return true;
+            else
+                return false;
+        }
+        private XmlElement getrichmedia(XmlNode paragraph) //获取富文本对象
+        {
+            if (paragraph.Name == "img" || paragraph.Name == "iframe")
+            {
+                XmlElement img = doc_tem.CreateElement("richmedia");
+                if (paragraph.Name == "img")
+                {
+                    
+                    img.SetAttribute("type", "img");
+                    img.SetAttribute("src", ((XmlElement)paragraph).GetAttribute("src").Replace(MainWindow.idd_href + "\\", ""));
+                    img.SetAttribute("style", ((XmlElement)paragraph).GetAttribute("style"));
+                    img.InnerXml = "img";
+                    // return img;
+                    //break;
+
+                }
+                else
+                {
+                    //XmlElement img = doc_tem.CreateElement("richmedia");
+                    img.SetAttribute("type","media");
+                    string[] src = Regex.Split(((XmlElement)paragraph).GetAttribute("src"),MainWindow.tree5_sel.Name,RegexOptions.IgnoreCase);
+                    string[] path = Regex.Split(src[1], "&", RegexOptions.IgnoreCase);
+                    img.SetAttribute("src",path[0].Substring(0));
+                    img.InnerXml = "media";
+                }
+                return img;
+            }
+            else
+               return getrichmedia(paragraph.FirstChild);
+        }
+        private void analysis_text(XmlNodeList cc,XmlNode ccd)
+        { 
+         // string context;
+            foreach(XmlNode xm in cc)
+            {
+                if (ishasRichmedie(xm) == false)
+                {
+
+                    XmlElement p = doc_tem.CreateElement("paragraph");
+                    p.InnerText = xm.InnerText;
+                    ccd.AppendChild(p);
+
+                }
+                else
+                {
+                   // XmlElement richmedia = doc_tem.CreateElement("richmedia");
+                    ccd.AppendChild(getrichmedia(xm));
+                }
+
+            }
+
+        }
+        public void savetem(XmlNode cc)
         {
             XmlNodeList ccwww = root_tem.SelectNodes(type);
             foreach (XmlNode ccd in ccwww)
@@ -73,7 +135,16 @@ namespace WpfApplication1
                 {
                     foreach (XmlNode xm in ccd.ChildNodes)
                     {
-                        xm.InnerText = ccd.SelectSingleNode(xm.Name).InnerText;
+                       //mlNodeList ccc= cc.SelectSingleNode(xm.Name).ChildNodes;
+                        if (xm.Name.Contains("text") == true)
+                        {
+                            XmlNodeList ccc = cc.SelectSingleNode(xm.Name).ChildNodes;
+
+                            analysis_text(ccc,xm);
+                        }
+                        else
+                            xm.InnerText = cc.SelectSingleNode(xm.Name).InnerText;
+
                     }
                     break;
                 }

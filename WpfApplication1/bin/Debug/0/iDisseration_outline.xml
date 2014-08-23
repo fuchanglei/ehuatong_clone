@@ -13,7 +13,7 @@
     <Section2 id="1.1.1" sec-title="三级标题" href="1/1.1/1.1.1" nodetype="Section2"></Section2>  
 	</Section1>
 </Chapter>
-<Refer href="../center/refer.htm" nodetype="common">参考文献</Refer>
-<Appendix href="../center/appendix.htm" nodetype="common">附录</Appendix>
-<Thanks href="../center/thanks.htm" nodetype="common">致谢</Thanks>
+<Refer id="1" href="../center/refer.htm" nodetype="common">参考文献</Refer>
+<Appendix id="1" href="../center/appendix.htm" nodetype="common">附录</Appendix>
+<Thanks id="1" href="../center/thanks.htm" nodetype="common">致谢</Thanks>
 </IDisseration> 
