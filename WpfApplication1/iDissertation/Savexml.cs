@@ -111,10 +111,12 @@ namespace WpfApplication1
             {
                 if (ishasRichmedie(xm) == false)
                 {
-
-                    XmlElement p = doc_tem.CreateElement("paragraph");
-                    p.InnerText = xm.InnerText;
-                    ccd.AppendChild(p);
+                    if (xm.InnerText != null)
+                    {
+                        XmlElement p = doc_tem.CreateElement("paragraph");
+                        p.InnerText = xm.InnerText;
+                        ccd.AppendChild(p);
+                    }
 
                 }
                 else
@@ -128,8 +130,6 @@ namespace WpfApplication1
         }
         public void savetem(XmlNode cc)
         {
-            lock (cc)
-            {
                 XmlNodeList ccwww = root_tem.SelectNodes(type);
                 foreach (XmlNode ccd in ccwww)
                 {
@@ -142,18 +142,15 @@ namespace WpfApplication1
                             {
                                 xms.RemoveAll();
                                 XmlNodeList ccc = cc.SelectSingleNode(xms.Name).ChildNodes;
-
                                 analysis_text(ccc, xms);
                             }
                             else
                                 xms.InnerText = cc.SelectSingleNode(xms.Name).InnerText;
-
                         }
                         break;
                     }
-                }
-                doc_tem.Save(xml_tem);
             }
+                doc_tem.Save(xml_tem);
         }
         public void init_idis()  //创建的时候初始化idis
         {
