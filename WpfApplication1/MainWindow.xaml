@@ -199,7 +199,7 @@
                         </ContextMenu>
                     </ListView.ContextMenu>
                 </ListView>
-                <TreeView Name="tree6" Visibility="Hidden" BorderThickness="0" Background="#FFB1BED5" ItemTemplate="{StaticResource treeViewTemplate5}"  Height="auto" SelectedItemChanged="tree6_SelectedItemChanged"  PreviewMouseLeftButtonDown="tree6_PreviewMouseLeftButtonDown">
+                <TreeView Name="tree6" Visibility="Hidden" BorderThickness="0" Background="#FFB1BED5" ItemTemplate="{StaticResource treeViewTemplate5}"  Height="auto" SelectedItemChanged="tree6_SelectedItemChanged">
                     <TreeView.ItemContainerStyle>
                         <Style TargetType="{x:Type TreeViewItem}">
                             <Setter Property="IsExpanded" Value="True"></Setter>

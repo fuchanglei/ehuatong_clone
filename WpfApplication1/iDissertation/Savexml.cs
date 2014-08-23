@@ -128,28 +128,32 @@ namespace WpfApplication1
         }
         public void savetem(XmlNode cc)
         {
-            XmlNodeList ccwww = root_tem.SelectNodes(type);
-            foreach (XmlNode ccd in ccwww)
+            lock (cc)
             {
-                if (((XmlElement)ccd).GetAttribute("id") == _id)
+                XmlNodeList ccwww = root_tem.SelectNodes(type);
+                foreach (XmlNode ccd in ccwww)
                 {
-                    foreach (XmlNode xm in ccd.ChildNodes)
+                    if (((XmlElement)ccd).GetAttribute("id") == _id)
                     {
-                       //mlNodeList ccc= cc.SelectSingleNode(xm.Name).ChildNodes;
-                        if (xm.Name.Contains("text") == true)
+                        foreach (XmlNode xms in ccd.ChildNodes)
                         {
-                            XmlNodeList ccc = cc.SelectSingleNode(xm.Name).ChildNodes;
+                            //mlNodeList ccc= cc.SelectSingleNode(xm.Name).ChildNodes;
+                            if (xms.Name.Contains("text") == true)
+                            {
+                                xms.RemoveAll();
+                                XmlNodeList ccc = cc.SelectSingleNode(xms.Name).ChildNodes;
 
-                            analysis_text(ccc,xm);
+                                analysis_text(ccc, xms);
+                            }
+                            else
+                                xms.InnerText = cc.SelectSingleNode(xms.Name).InnerText;
+
                         }
-                        else
-                            xm.InnerText = cc.SelectSingleNode(xm.Name).InnerText;
-
+                        break;
                     }
-                    break;
                 }
+                doc_tem.Save(xml_tem);
             }
-            doc_tem.Save(xml_tem);
         }
         public void init_idis()  //创建的时候初始化idis
         {

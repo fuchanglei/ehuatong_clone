@@ -50,6 +50,7 @@ namespace WpfApplication1
         private int last;
         private bool isselect = true;
         private string filename;
+        private bool issave;
         public bool web_show = false;
         ObservableCollection<sidefiles> ss = new ObservableCollection<sidefiles>();
         ContextMenu c1;
@@ -75,8 +76,12 @@ namespace WpfApplication1
             c3 = cireateMenu3();
             c4 = cireateMenu4();
             c5 = cireateMenu5();
+            if(!Directory.Exists(item_Directory))
+            {
+                Directory.CreateDirectory(item_Directory);
+            }
             WebBrowserSecurity.setIEInternetSecurity();
-
+            
             this.webBrowser1.Navigate("file:///F:/ueditor1_3_6-src_tofuchangli/ueditor1_3_6-src/index.html");
             this.webBrowser1.ObjectForScripting = new JSEvent();
             //this.webBrowser1.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(PrintDocument);
@@ -784,71 +789,79 @@ namespace WpfApplication1
         {
 
             //ThreadPool.QueueUserWorkItem(status=>savexml(tree6_sel));
-            if (tree6_sel.type != outlinetype.empty && tree6_sel.Name1 != null)
-            {
-               savexml(tree6_sel, savecontext);
+            if (issave == true)
+            {   
+               // if(savecontext!=null)
+                if (tree6_sel.type != outlinetype.empty && tree6_sel.Name1 != null)
+                {
+                       savecontext=invoker.InvokeScript("getContent").ToString();
+                        savexml(tree6_sel, savecontext);
+                    
+                }
             }
-            try
-            {
-                tree6_sel = this.tree6.SelectedItem as outline;
-                textBox2.Text = tree6_sel.Name1;
-                //tree6_sel.Name1 = "1111";
-                //tree6_sel = tree6.SelectedItem as outline;
-                if (tree6_sel.type != outlinetype.common)
+                try
                 {
-                    this.tree6.ContextMenu = c5;
-                }
-                else
-                    this.tree6.ContextMenu = null;
-                // iDissertation ccc = tree5.SelectedItem as iDissertation;
-                if (tree6_sel.Name1.Contains("封面") == true || tree6_sel.nodename == "Statement")
-                {
-
-                    //string filepath = item_Directory;
-                    // cd = "../../" + filepath + "/article_xml/";
-                    //string cccc = ccc.href;
-                    string cd = idd_href + "/" + tree6_sel.href;
-                    //cd = cd + cc.href.Replace("..", "");
-                    this.webBrowser1.Navigate(@cd);
-                    web_show = true;
-                }
-                else
-                {
-
-                    if (web_show)
-                    {
-                        this.webBrowser1.Navigate("file:///F:/ueditor1_3_6-src_tofuchangli/ueditor1_3_6-src/index.html");
-                        web_show = false;
-                    }
+                    tree6_sel = this.tree6.SelectedItem as outline;
+                    textBox2.Text = tree6_sel.Name1;
+                    //tree6_sel.Name1 = "1111";
+                    //tree6_sel = tree6.SelectedItem as outline;
                     if (tree6_sel.type != outlinetype.common)
                     {
-                        article dd = new article(tree6_sel.secid,"Papersection/" + tree6_sel.nodename);
+                        this.tree6.ContextMenu = c5;
+                    }
+                    else
+                        this.tree6.ContextMenu = null;
+                    // iDissertation ccc = tree5.SelectedItem as iDissertation;
+                    if (tree6_sel.Name1.Contains("封面") == true || tree6_sel.nodename == "Statement")
+                    {
 
-                        if (invoker.WaitWebPageLoad() == true)
-                        {
-                            invoker.InvokeScript("setContent", dd.getcontext().Replace("&amp;","&"));
-
-                        }
+                        //string filepath = item_Directory;
+                        // cd = "../../" + filepath + "/article_xml/";
+                        //string cccc = ccc.href;
+                        string cd = idd_href + "/" + tree6_sel.href;
+                        //cd = cd + cc.href.Replace("..", "");
+                        this.webBrowser1.Navigate(@cd);
+                        web_show = true;
                     }
                     else
                     {
-                        article dd = new article(tree6_sel.nodename);
 
-                        if (invoker.WaitWebPageLoad() == true)
+                        if (web_show)
                         {
-                            invoker.InvokeScript("setContent", dd.getcontext_comm().Replace("&amp;","&"));
+                            this.webBrowser1.Navigate("file:///F:/ueditor1_3_6-src_tofuchangli/ueditor1_3_6-src/index.html");
+                            web_show = false;
+                        }
+                        if (tree6_sel.type != outlinetype.common)
+                        {
+                            article dd = new article(tree6_sel.secid, "Papersection/" + tree6_sel.nodename);
+
+                            if (invoker.WaitWebPageLoad() == true)
+                            {
+                                invoker.InvokeScript("setContent", dd.getcontext().Replace("&amp;", "&"));
+
+                            }
+                        }
+                        else
+                        {
+                            article dd = new article(tree6_sel.nodename);
+
+                            if (invoker.WaitWebPageLoad() == true)
+                            {
+                                invoker.InvokeScript("setContent", dd.getcontext_comm().Replace("&amp;", "&"));
+                            }
                         }
                     }
+                    issave = true;
                 }
-            }
-            catch
-            {
-                if (invoker.WaitWebPageLoad() == true)
+                catch
                 {
-                    invoker.InvokeScript("setContent", "");
+                    if (invoker.WaitWebPageLoad() == true)
+                    {
+                        invoker.InvokeScript("setContent", "");
+                    }
                 }
-              }
-                
+
+            
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
@@ -884,16 +897,22 @@ namespace WpfApplication1
         {
             //this.tree6.ItemsSource = null;
             if (isselect)
-            {
+            { 
+                issave = false;
+              // if (tree6_sel.type != outlinetype.empty && tree6_sel.Name1 != null)
+              //{
+                //  savexml(tree6_sel, savecontext);
+             //  }
                 web_show = true;
                 listView1.Visibility = Visibility.Hidden;
                 this.tree6.Visibility = Visibility.Visible;
                 tree5_sel = (iDissertation)tree5.SelectedItem;
-                idd_href = tree5_sel.href;
                // newname = tree5_sel.Name;
+                idd_href = tree5_sel.href;
                 select_tree5 = new outline_Data(true);
                 // MessageBox.Show(idd_href);
                 this.tree6.ItemsSource = select_tree5.TreeViewItems1;
+               
 
             }
             //this.webBrowser1.Navigate("d:\\muban\\index_Paper.html");
@@ -907,13 +926,6 @@ namespace WpfApplication1
         }
 
 
-        private void tree6_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (tree6_sel.type != outlinetype.empty && tree6_sel.Name1 != null)
-            {
-                savecontext = invoker.InvokeScript("getContent").ToString();
-            }
-        }
 
               
     }
