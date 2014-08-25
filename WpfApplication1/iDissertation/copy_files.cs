@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using System.IO;
 
 namespace WpfApplication1
@@ -15,12 +19,20 @@ namespace WpfApplication1
            _from = from;
            _to = to;
        }
-       public void copyfile()
+       public static void copyfile(string from,string to)
        {
-           DirectoryInfo dirinfo = new DirectoryInfo(_from);
+           DirectoryInfo dirinfo = new DirectoryInfo(from);
            foreach (FileSystemInfo fi in dirinfo.GetFileSystemInfos())
            {
-               File.Copy(fi.FullName,_to+"\\"+fi.Name,true);
+               
+               if (fi is DirectoryInfo)
+               {
+                   string currentdir = to + "\\" + Path.GetFileName(fi.Name);
+                   Directory.CreateDirectory(currentdir);
+                   copyfile(fi.FullName,currentdir);
+               }
+               else
+               File.Copy(fi.FullName,to+"\\"+fi.Name,true);
            }
        }
        public static void DeleteDir(string aimPath)
@@ -49,7 +61,7 @@ namespace WpfApplication1
                    }
                }
                //删除文件夹
-               System.IO .Directory .Delete (aimPath,true);
+               System.IO.Directory.Delete(aimPath,true);
            }
            catch
            {

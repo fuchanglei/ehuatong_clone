@@ -67,12 +67,6 @@ namespace WpfApplication1
             
                     //textEventArgs E = new textEventArgs(textBox1.Text.Trim());
                    // getnote(this, E);
-                
-            
-
-           
-            
-            
 
             this.Close();
         }
@@ -80,11 +74,33 @@ namespace WpfApplication1
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //Window1 w1 = new Window1();
-            if (type == 3)
+            switch (type)
+            { 
+                case 1:
+                textBlock1.Text = "章节名：";
+                this.Title = "修改章节名";
+                break;
+                case 2:
+                textBlock1.Text = "小节名：";
+                this.Title = "修改小节名";
+                break;
+                case 3:
+                textBlock1.Text = "章节名：";
+                this.Title = "修改小节名";
+                break;
+                case 4:
+                textBlock1.Text = "章节：";
+                this.Title = "新建章节";
+                break;
+                case 5:
+                textBlock1.Text = "小节名：";
+                this.Title = "新建小节";
+                break;
+                default:
+                break;
+            }
                 textBox1.Text = name;
                 button1.IsEnabled = false;
-            
-
         }
 
         private void button2_Click(object sender, RoutedEventArgs e)
